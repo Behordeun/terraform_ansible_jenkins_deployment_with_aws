@@ -37,3 +37,6 @@ terraform.rc
 .vscode/
 
 .DS_Store
+
+mtc_terransible_key
+mtc_terransible_key.pub

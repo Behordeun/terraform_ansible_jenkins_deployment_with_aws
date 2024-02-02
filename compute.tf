@@ -27,7 +27,7 @@ resource "aws_instance" "mtc_terransible_node" {
     count = var.main_instance_count
     instance_type          = var.main_instance_type
     ami                    = data.aws_ami.server_ami.id
-    #key_name               = aws_key_pair.mtc_terransible_auth.id
+    key_name               = aws_key_pair.mtc_terransible_auth.id
     vpc_security_group_ids = [aws_security_group.mtc_terransible_sg.id]
     subnet_id              = aws_subnet.mtc_terransible_pub_subnet.*.id[count.index]
     #user_data              = file("userdata.tpl")

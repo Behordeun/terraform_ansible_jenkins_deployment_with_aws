@@ -1,17 +1,40 @@
+##!/bin/bash
+#
+#sudo hostnamectl set-hostname ${new_hostname} &&
+#
+#sudo apt-get install -y apt-transport-https software-properties-common wget &&
+#
+#wget -q -O - https://packages.grafana.com/gpg.key | sudo apt-key add - &&
+#
+#echo "deb https://packages.grafana.com/oss/deb stable main" | sudo tee -a /etc/apt/sources.list.d/grafana.list &&
+#
+#sudo apt-get -y update &&
+#
+#sudo apt-get -y install grafana &&
+#
+#sudo systemctl enable grafana-server.service &&
+#
+#sudo systemctl start grafana-server
+
 #!/bin/bash
 
-sudo hostnamectl set-hostname ${new_hostname} &&
+set -e
 
-sudo apt-get install -y apt-transport-https software-properties-common wget &&
+# Set hostname
+sudo hostnamectl set-hostname ${"$new_hostname"}
 
-wget -q -O - https://packages.grafana.com/gpg.key | sudo apt-key add - &&
+# Install required packages
+sudo apt-get -y update
+sudo apt-get -y install -y apt-transport-https software-properties-common wget
 
-echo "deb https://packages.grafana.com/oss/deb stable main" | sudo tee -a /etc/apt/sources.list.d/grafana.list &&
+# Add Grafana GPG key and repository
+wget -q -O - https://packages.grafana.com/gpg.key | sudo apt-key add -
+echo "deb https://packages.grafana.com/oss/deb stable main" | sudo tee /etc/apt/sources.list.d/grafana.list
 
-sudo apt-get -y update &&
+# Install Grafana
+sudo apt-get -y update
+sudo apt-get -y install -y grafana
 
-sudo apt-get -y install grafana &&
-
-sudo systemctl enable grafana-server.service &&
-
+# Enable and start Grafana service
+sudo systemctl enable grafana-server
 sudo systemctl start grafana-server

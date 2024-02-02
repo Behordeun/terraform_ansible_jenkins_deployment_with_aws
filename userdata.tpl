@@ -12,6 +12,6 @@ sudo apt-get -y update &&
 
 sudo apt-get -y install grafana &&
 
-sudo systemctl start grafana-server &&
+sudo systemctl enable grafana-server.service &&
 
-sudo systemctl enable grafana-server.service
+sudo systemctl start grafana-server

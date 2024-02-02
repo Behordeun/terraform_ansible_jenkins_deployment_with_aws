@@ -15,7 +15,6 @@ data "aws_ami" "server_ami" {
     }
 }
 
-
 # Create a key pair
 resource "aws_key_pair" "mtc_terransible_auth" {
     key_name   = var.key_name

@@ -19,7 +19,7 @@ data "aws_ami" "server_ami" {
 # Create a key pair
 resource "aws_key_pair" "mtc_terransible_auth" {
     key_name   = var.key_name
-    public_key = var.public_key_path
+    public_key = "${file(var.public_key)}"
 }
 
 # Create an instance

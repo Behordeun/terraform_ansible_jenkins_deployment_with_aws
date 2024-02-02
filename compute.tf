@@ -30,7 +30,7 @@ resource "aws_instance" "mtc_terransible_node" {
     key_name               = aws_key_pair.mtc_terransible_auth.id
     vpc_security_group_ids = [aws_security_group.mtc_terransible_sg.id]
     subnet_id              = aws_subnet.mtc_terransible_pub_subnet.*.id[count.index]
-    #user_data              = file("userdata.tpl")
+    user_data              = templatefile("./userdata.tpl", {new_hostname = "mtc-terransible-main-${random_id.mtc_node_id[count.index].dec}"})
 
     root_block_device {
         volume_size = var.main_volume_size

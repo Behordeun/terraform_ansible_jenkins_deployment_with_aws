@@ -30,3 +30,7 @@ variable "key_name" {
 variable "public_key" {
   type = string
 }
+
+variable "identity_file" {
+  type = string
+}

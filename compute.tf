@@ -18,7 +18,7 @@ data "aws_ami" "server_ami" {
 # Create a key pair
 resource "aws_key_pair" "mtc_terransible_auth" {
     key_name   = var.key_name
-    public_key = "${file(var.public_key)}"
+    public_key = file(var.public_key)
 }
 
 # Create an instance
@@ -39,13 +39,13 @@ resource "aws_instance" "mtc_terransible_node" {
     }
 
     # Provisioner(s) are a last resort. You will want to avoid using them as mush as possible.
-    #provisioner "local-exec" {
-    #    command = templatefile("${var.host_os}-ssh-config.tpl", {
-    #    hostname     = self.public_ip,
-    #    user         = "ubuntu",
-    #    identityfile = "~/.ssh/mtc-terransiblekey",
-    #    })
+    provisioner "local-exec" {
+        command = "printf '\n${self.public_ip}' >> aws_hosts"
+        }
 
-    #interpreter = var.host_os == "windows" ? ["powershell", "-command"] : ["bash", "-c"] # For windows users
-    #}
+    provisioner "local-exec" {
+        when = destroy
+        command = "sed -i '/^[0-9]/d' aws_hosts"
+    }
+
 }

@@ -41,8 +41,7 @@ resource "aws_instance" "mtc_terransible_node" {
     # Provisioner(s) are a last resort. You will want to avoid using them as mush as possible.
     provisioner "local-exec" {
         command = "printf '\n${self.public_ip}' >> aws_hosts"
-        }
-
+    }
     provisioner "local-exec" {
         when = destroy
         command = "sed -i '/^[0-9]/d' aws_hosts"

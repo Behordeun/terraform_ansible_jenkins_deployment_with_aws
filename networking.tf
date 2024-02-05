@@ -28,9 +28,9 @@ resource "aws_vpc" "mtc_terransible_vpc" {
 
 # Create a public subnet resource in the VPC
 resource "aws_subnet" "mtc_terransible_pub_subnet" {
-  count = length(local.azs)
-  vpc_id = aws_vpc.mtc_terransible_vpc.id
-  cidr_block = cidrsubnet(var.vpc_cidr, 8, count.index)
+  count                   = length(local.azs)
+  vpc_id                  = aws_vpc.mtc_terransible_vpc.id
+  cidr_block              = cidrsubnet(var.vpc_cidr, 8, count.index)
   map_public_ip_on_launch = true
   availability_zone       = local.azs[count.index]
 
@@ -41,9 +41,9 @@ resource "aws_subnet" "mtc_terransible_pub_subnet" {
 
 # Create a private subnet resource in the VPC
 resource "aws_subnet" "mtc_terransible_priv_subnet" {
-  count = length(local.azs)
-  vpc_id = aws_vpc.mtc_terransible_vpc.id
-  cidr_block = cidrsubnet(var.vpc_cidr, 8, length(local.azs) + count.index)
+  count                   = length(local.azs)
+  vpc_id                  = aws_vpc.mtc_terransible_vpc.id
+  cidr_block              = cidrsubnet(var.vpc_cidr, 8, length(local.azs) + count.index)
   map_public_ip_on_launch = false
   availability_zone       = local.azs[count.index]
 
@@ -90,7 +90,7 @@ resource "aws_default_route_table" "mtc_terransible_priv_rt" {
 
 # Create a route table association for the public subnet in the VPC
 resource "aws_route_table_association" "mtc_terransible_pub_rt-assoc" {
-  count = length(local.azs)
+  count          = length(local.azs)
   subnet_id      = aws_subnet.mtc_terransible_pub_subnet.*.id[count.index]
   route_table_id = aws_route_table.mtc_terransible_pub_rt.id
 }
@@ -104,20 +104,20 @@ resource "aws_security_group" "mtc_terransible_sg" {
 
 # Create an ingress connection
 resource "aws_security_group_rule" "ingress_all" {
-  type = "ingress"
-  from_port = 0
-  to_port = 65535
-  protocol = "-1"
-  cidr_blocks = var.access_ip
+  type              = "ingress"
+  from_port         = 0
+  to_port           = 65535
+  protocol          = "-1"
+  cidr_blocks       = var.access_ip
   security_group_id = aws_security_group.mtc_terransible_sg.id
 }
 
 # Create an egress connection
 resource "aws_security_group_rule" "egress_all" {
-  type = "egress"
-  from_port = 0
-  to_port = 65535
-  protocol = "-1"
-  cidr_blocks = ["0.0.0.0/0"]
+  type              = "egress"
+  from_port         = 0
+  to_port           = 65535
+  protocol          = "-1"
+  cidr_blocks       = ["0.0.0.0/0"]
   security_group_id = aws_security_group.mtc_terransible_sg.id
 }

@@ -9,17 +9,17 @@ variable "access_ip" {
 }
 
 variable "main_instance_type" {
-  type = string
+  type    = string
   default = "t2.micro"
 }
 
 variable "main_volume_size" {
-  type = number
+  type    = number
   default = 10
 }
 
 variable "main_instance_count" {
-  type = number
+  type    = number
   default = 1
 }
 
